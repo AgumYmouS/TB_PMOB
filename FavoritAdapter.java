@@ -1,22 +1,19 @@
 package com.schwarzschild.absenonline;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.http.Url;
-
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>{
+public class FavoritAdapter extends RecyclerView.Adapter<FavoritAdapter.FavoritHolder>{
     ArrayList<Mahasiswa> listMahasiswa = new ArrayList<>();
 
     public void setListMahasiswa(ArrayList<Mahasiswa> mahas){
@@ -31,20 +28,20 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     @NonNull
     @Override
-    public FavoriteAdapter.FavoriteHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Context context = viewGroup.getContext();
-        View v = LayoutInflater.from(context).inflate(R.layout.layout_favorit, viewGroup, false);
-        FavoriteHolder holder = new FavoriteHolder(v);
+    public FavoritAdapter.FavoritHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_favorit, viewGroup, false);
+        FavoritHolder holder = new FavoritHolder(v);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FavoriteHolder favoriteHolder, int i){
-        final Mahasiswa daftar = listMahasiswa.get(i);
-        ImageView imageView = favoriteHolder.foto;
-        String url = daftar.getFotoLink();
+    public void onBindViewHolder(@NonNull FavoritAdapter.FavoritHolder favoritHolder, int i){
 
-        Glide.with(favoriteHolder.parentLayout1).load(url).into(imageView);
+        final Mahasiswa daftar = listMahasiswa.get(i);
+        String url = daftar.getFotoLink();
+        Glide.with(favoritHolder.itemView)
+                .load(url)
+                .into(favoritHolder.foto);
 
     }
 
@@ -56,16 +53,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         return 0;
     }
 
-    public class FavoriteHolder extends RecyclerView.ViewHolder{
+    public class FavoritHolder extends RecyclerView.ViewHolder{
         ImageView foto;
-        RelativeLayout parentLayout1;
 
-        public FavoriteHolder(@NonNull View itemView) {
+        public FavoritHolder(@NonNull View itemView) {
             super(itemView);
             foto = itemView.findViewById(R.id.f_foto);
-            parentLayout1 = itemView.findViewById(R.id.parent_layout1);
 
         }
     }
-
 }
+

@@ -3,8 +3,6 @@ package com.schwarzschild.absenonline;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 public class Mahasiswa implements Parcelable {
     int id;
     String nama;

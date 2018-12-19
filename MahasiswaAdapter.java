@@ -47,7 +47,6 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         final Mahasiswa daftar = listMahasiswa.get(i);
         mahasiswaHolder.nama.setText(daftar.getNama());
         mahasiswaHolder.nim.setText(String.valueOf(daftar.getNim()));
-
     }
 
     @Override

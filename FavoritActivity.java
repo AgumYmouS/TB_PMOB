@@ -25,22 +25,23 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FavoritActivity extends AppCompatActivity{
+    private static final String TAG = "FavoritActivity";
 
-    ArrayList<Mahasiswa> mahasiswaList = new ArrayList<>();
+    ArrayList<Mahasiswa> listMahasiswa = new ArrayList<>();
     RecyclerView rv_favorit;
-    FavoriteAdapter favoriteAdapter;
+    FavoritAdapter favoritAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_favorit);
 
-        favoriteAdapter = new FavoriteAdapter();
-        favoriteAdapter.setListMahasiswa(mahasiswaList);
-        favoriteAdapter.notifyDataSetChanged();
+        favoritAdapter = new FavoritAdapter();
+        favoritAdapter.setListMahasiswa(listMahasiswa);
+        favoritAdapter.notifyDataSetChanged();
 
         rv_favorit = findViewById(R.id.rv_favorit);
-        rv_favorit.setAdapter(favoriteAdapter);
+        rv_favorit.setAdapter(favoritAdapter);
         rv_favorit.setLayoutManager(new LinearLayoutManager(this));
         getFavorit();
     }
@@ -72,7 +73,7 @@ public class FavoritActivity extends AppCompatActivity{
                     Toast.makeText(FavoritActivity.this, "Berhasil", Toast.LENGTH_SHORT).show();
 
                     List<Mahasiswa> listMahaItem = response.body();
-                    favoriteAdapter.setListMahasiswa(listMahaItem);
+                    favoritAdapter.setListMahasiswa(listMahaItem);
                 }
 
                 @Override

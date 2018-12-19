@@ -169,6 +169,7 @@ public class AbsenActivity extends AppCompatActivity implements MahasiswaAdapter
 
                     List<Mahasiswa> listMahaItem = response.body();
 
+                    mDb.absenMatkulDao().delAbsenMatkul(tanggal, matkulName);
                     saveMahasiswaToDb(listMahaItem);
 
                     mahasiswaAdapter.setListMahasiswa(listMahaItem);
@@ -187,7 +188,7 @@ public class AbsenActivity extends AppCompatActivity implements MahasiswaAdapter
                 }
             });
         }else{
-            List<AbsenMatkul> listNow = mDb.absenMatkulDao().getAllAbsenMatkul();
+            List<AbsenMatkul> listNow = mDb.absenMatkulDao().getAbsenMatkul(tanggal, matkulName);
             List<Mahasiswa> mahasiswaList = new ArrayList<>();
             for(AbsenMatkul absmtk: listNow) {
                 Mahasiswa m = new Mahasiswa(

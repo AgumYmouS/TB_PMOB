@@ -87,10 +87,10 @@ public class InputActivity extends AppCompatActivity {
                     eBp.setError("BP is required!");
                 }else {
                     upload(imageBitmap);
+                    Intent intent = new Intent(v.getContext(), AbsenActivity.class);
+                    intent.putExtra("matkul", iMatkul);
+                    startActivityForResult(intent, 1);
                 }
-                Intent intent = new Intent(v.getContext(), AbsenActivity.class);
-                intent.putExtra("matkul", iMatkul);
-                startActivityForResult(intent, 1);
             }
         });
     }
