@@ -157,7 +157,7 @@ public class InputActivity extends AppCompatActivity {
 
     private File createTempFile(Bitmap bitmap) {
         File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                , System.currentTimeMillis() +"_image.webp");
+                , System.currentTimeMillis() +"_image.jpeg");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
         bitmap.compress(Bitmap.CompressFormat.WEBP,0, bos);

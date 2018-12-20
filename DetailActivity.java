@@ -9,13 +9,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ShareActionProvider;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -28,7 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements ShareActionProvider.OnShareTargetSelectedListener {
 
     private static final String TAG = "DetailActivity";
 
@@ -47,6 +50,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_mahasiswa);
+
 
         dNama = findViewById(R.id.h_nama);
         dBp = findViewById(R.id.h_bp);
@@ -157,29 +161,30 @@ public class DetailActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.share, menu);
-//        MenuItem item = menu.findItem(R.id.action_share);
-//        mShare = (ShareActionProvider) item.getActionProvider();
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.share, menu);
+        MenuItem item = menu.findItem(R.id.action_share);
+        int id = item.getItemId();
+        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
-//    {
-//        Uri uri = Uri.parse(dMahasiswa.getFotoLink());
-//        Intent shareIntent = new Intent();
-//        shareIntent.setAction(Intent.ACTION_SEND);
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, dNama.getText());
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, dBp.getText());
-//        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-//        shareIntent.setType("image/*");
-//        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//        startActivity(Intent.createChooser(shareIntent, "Share images..."));
-//    }
+        if(mShare != null){
+            Uri uri = Uri.parse(dMahasiswa.getFotoLink());
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, dNama.getText());
+            shareIntent.putExtra(Intent.EXTRA_TEXT, dBp.getText());
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/*");
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            mShare.setShareIntent(shareIntent);
+        }
+        return(super.onCreateOptionsMenu(menu));
+    }
 
-//    private void setShareIntent(Intent shareIntent) {
-//        if (mShare != null) {
-//            mShare.setShareIntent(shareIntent);
-//        }
-//    }
+    @Override
+    public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+        Toast.makeText(this, intent.getComponent().toString(), Toast.LENGTH_LONG).show();
+        return (false);
+    }
 }
